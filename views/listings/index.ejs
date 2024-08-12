@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>All Listings</title>
+</head>
+
+<body>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <%- include('../partials/_navbar.ejs') %>
+        <div class="index-header">
+            <h1>All Listings</h1>
+            <a href="/listings/new">+ Add Listing</a>
+        </div>
+        <div class="card-container">
+            <% listings.forEach((listing)=> { %>
+                <a href="/listings/<%= listing._id %>">
+                    <h4>
+                        <%= listing.city %> Listing
+                    </h4>
+                    <p>Owned by <%= listing.owner.username %>
+                    </p>
+                </a>
+                <% }) %>
+</body>
+
+</html>

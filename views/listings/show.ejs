@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title><%= listing.streetAddress %></title>
+    <!-- Add any additional CSS or meta tags here -->
+</head>
+
+<body>
+    <!-- Include the navbar partial -->
+    <%- include('../partials/_navbar.ejs') %>
+    <div class="show-page-container">
+        <div class="show-img"></div>
+        <div class="show-info-container">
+          <div class="show-header">
+            <h1><%= listing.city %> Listing</h1>
+            <h3>$<%= listing.price %></h3>
+          </div>
+          <div class="show-details-container">
+            <h3>Details</h3>
+            <p>House Size: <%= listing.size %> sq ft</p>
+            <p>Address: <%= listing.streetAddress %></p>
+            <% if (listing.owner._id.equals(user._id)) { %>
+            <div class="owner-container">
+              <p>Owned by you</p>
+              <a href="/listings/<%= listing._id %>/edit">Edit</a>
+              <form
+                action="/listings/<%= listing._id %>?_method=DELETE"
+                method="POST"
+              >
+                <button type="submit">Delete Listing</button>
+              </form>
+            </div>
+            <% } else { %>
+            <p>Owned by <%= listing.owner.username %></p>
+            <% } %>
+          </div>
+          <div class="favorites-container">
+            <div class="favorites-count">
+              <h2><%= listing.favoritedByUsers.length %> Favorites</h2>
+            </div>
+            <div class="favorite-button-container">
+              <% if (userHasFavorited) { %>
+              <form
+                action="/listings/<%= listing._id %>/favorited-by/<%= user._id %>?_method=DELETE"
+                method="POST"
+              >
+                <button type="submit">Unfavorite</button>
+              </form>
+              <% } else { %>
+              <form
+                action="/listings/<%= listing._id %>/favorited-by/<%= user._id %>"
+                method="POST"
+              >
+                <button type="submit">Favorite</button>
+              </form>
+              <% } %>
+
+    
+</body>
+
+</html>
