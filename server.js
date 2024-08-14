@@ -6,8 +6,6 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const morgan = require('morgan'); // Uncomment if you want logging
 const session = require('express-session');
-const csrf = require('csurf');
-const cookieParser = require("cookie-parser")
 
 const isSignedIn = require('./middleware/is-signed-in.js');
 const passUserToView = require('./middleware/pass-user-to-view.js');
@@ -15,9 +13,6 @@ const passUserToView = require('./middleware/pass-user-to-view.js');
 const authController = require('./controllers/auth.js');
 const listingsController = require('./controllers/listings.js');
 const usersController = require('./controllers/users.js');
-
-const csrfProtection = csrf({cookie: true});
-
 
 const port = process.env.PORT || '1234';
 
@@ -31,7 +26,6 @@ mongoose.connection.on('connected', () => {
 });
 
 // Middleware setup
-app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(morgan('dev')); // Uncomment if you want logging
@@ -42,14 +36,12 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-
 // Middleware for user data
-app.use(csrfProtection);
 app.use(passUserToView);
 
 // Routes
 app.get('/', (req, res) => {
-  res.render('index.ejs')
+  res.render('index.ejs');
 });
 
 app.get('/vip-lounge', (req, res) => {
@@ -66,10 +58,8 @@ app.set('view engine', 'ejs');
 // Route handlers
 app.use('/auth', authController);
 app.use('/listings', isSignedIn, listingsController); // Ensure listing routes are protected
-app.use('/middleware', isSignedIn); 
-
+app.use('/middleware', isSignedIn);
 app.use('/users', isSignedIn, usersController);
-
 
 // Global error handling (optional, but recommended)
 app.use((err, req, res, next) => {

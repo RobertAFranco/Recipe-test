@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <title><%= listing.streetAddress %></title>
-    <!-- Add any additional CSS or meta tags here -->
 </head>
-
 <body>
-    <!-- Include the navbar partial -->
     <%- include('../partials/_navbar.ejs') %>
     <div class="show-page-container">
         <div class="show-img"></div>
@@ -27,10 +23,7 @@
             <div class="owner-container">
               <p>Owned by you</p>
               <a href="/listings/<%= listing._id %>/edit">Edit</a>
-              <form
-                action="/listings/<%= listing._id %>?_method=DELETE"
-                method="POST"
-              >
+              <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
                 <button type="submit">Delete Listing</button>
               </form>
             </div>
@@ -44,22 +37,19 @@
             </div>
             <div class="favorite-button-container">
               <% if (userHasFavorited) { %>
-              <form
-                action="/listings/<%= listing._id %>/favorited-by/<%= user._id %>?_method=DELETE"
-                method="POST"
-              >
+              <form action="/listings/<%= listing._id %>/favorited-by/<%= user._id %>?_method=DELETE" method="POST">
+                
                 <button type="submit">Unfavorite</button>
               </form>
               <% } else { %>
-              <form
-                action="/listings/<%= listing._id %>/favorited-by/<%= user._id %>"
-                method="POST"
-              >
+              <form action="/listings/<%= listing._id %>/favorited-by/<%= user._id %>" method="POST">
+                
                 <button type="submit">Favorite</button>
               </form>
               <% } %>
-
-    
+            </div>
+          </div>
+        </div>
+    </div>
 </body>
-
 </html>

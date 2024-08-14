@@ -1,3 +1,4 @@
+//controllers/user.js
 const express = require('express');
 const router = express.Router();
 const Listing = require('../models/listing.js');
@@ -18,10 +19,11 @@ router.get('/profile', async (req, res) => {
     // Find listings favorited by the user
     const myFavoriteListings = await Listing.find({ favoritedByUsers: userId }).populate('owner');
 
-    // Render profile page with listings
+    
     res.render('users/show.ejs', {
       myListings,
-      myFavoriteListings
+      myFavoriteListings,
+     
     });
   } catch (error) {
     console.error('Error fetching user profile:', error);
